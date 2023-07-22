@@ -3,11 +3,11 @@
       "target": "es6",
       "module": "commonjs",
       "outDir": "dist",
-      "rootDir": "src",
+      "rootDir": "./",
       "strict": true,
-      "esModuleInterop": true
+      "esModuleInterop": true,
     },
-    "include": ["src/**/*.ts"],
+    "include": ["src/**/*.ts","controllers/**/*.ts","routes/**/*.ts","middlewares/**/*.ts"],
     "exclude": ["node_modules", "dist"]
   }
   
