@@ -1,21 +1,13 @@
-import express from 'express';
+import express, { Request, Response } from "express"
 
-const UserRouter = express.Router();
+const UserRouter = express.Router()
 
-UserRouter.get('/signup', (req, res) => {
-    res.send("Signup");
+UserRouter.post("/signup", (req: Request, res: Response) => {
+    res.send("Signup")
 })
 
-
-UserRouter.get('/login', (req, res) => {
-    res.send("Login");
+UserRouter.post("/login", (req: Request, res: Response) => {
+    res.send("Login")
 })
 
-
-
-
-
-
-
-export default UserRouter;
-
+export default UserRouter

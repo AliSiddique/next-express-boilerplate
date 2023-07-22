@@ -1,33 +1,31 @@
-import mongoose from 'mongoose';
-
+import mongoose from "mongoose"
 
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'Please provide a name']
+        required: [true, "Please provide a name"],
     },
     email: {
         type: String,
-        required: [true, 'Please provide an email'],
+        required: [true, "Please provide an email"],
         unique: true,
-
     },
     password: {
         type: String,
-        required: [true, 'Please provide a password'],
+        required: [true, "Please provide a password"],
         minlength: 6,
-        select: false
+        select: false,
     },
     subscription_name: {
         type: String,
-        required: [true, 'Please provide a subscription name'],
-        default: 'Free'
+        required: [true, "Please provide a subscription name"],
+        default: "Free",
     },
     role: {
         type: String,
-        enum: ['user', 'publisher'],
-        default: 'user'
+        enum: ["user", "publisher"],
+        default: "user",
     },
 })
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model("User", UserSchema)
