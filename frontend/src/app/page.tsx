@@ -1,19 +1,8 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+"use client"
 import { ChevronRightIcon, StarIcon } from "@heroicons/react/20/solid"
 import { JSX, SVGProps } from "react"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { auth } from "../../firebase.config"
 
 const stats = [
     { label: "Founded", value: "2021" },
@@ -132,6 +121,7 @@ const footerNavigation = {
 }
 
 export default function Example() {
+    const [user] = useAuthState(auth)
     return (
         <div className="bg-white">
             <main>
@@ -153,7 +143,9 @@ export default function Example() {
                                         className="inline-flex space-x-4"
                                     >
                                         <span className="rounded bg-rose-50 px-2.5 py-1 text-sm font-semibold text-rose-500">
-                                            What's new
+                                            {user
+                                                ? "Logged in " + user?.email
+                                                : "Logged out"}
                                         </span>
                                         <span className="inline-flex items-center space-x-1 text-sm font-medium text-rose-500">
                                             <span>Just shipped v0.1.0</span>
@@ -239,6 +231,7 @@ export default function Example() {
                             </div>
                         </div>
                     </div>
+                    <button onClick={() => auth.signOut()}>Sign out</button>
 
                     <div className="sm:mx-auto sm:max-w-3xl sm:px-6">
                         <div className="py-12 sm:relative sm:mt-12 sm:py-16 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
