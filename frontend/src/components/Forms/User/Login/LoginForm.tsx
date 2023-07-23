@@ -1,21 +1,16 @@
 "use client"
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import React, { useState } from 'react'
 import { auth } from '../../../../../firebase.config'
 import axios from 'axios'
-export default function SignupForm() {
+export default function LoginForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-        const user = userCredential.user
-     const res = await axios.post(`http://localhost:4000/api/user/signup`,{
-       uid: user?.uid,
-        email: user?.email,
-        displayName: user?.displayName,
-      })
-      
+        const userCredential = await signInWithEmailAndPassword(auth, email, password)
+        const user = userCredential.user  
+        console.log(user)    
     } 
     return (
       <>

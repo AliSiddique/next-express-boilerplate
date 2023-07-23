@@ -1,30 +1,25 @@
 import mongoose from "mongoose"
 
 const UserSchema = new mongoose.Schema({
-    name: {
+    uid: {
         type: String,
-        required: [true, "Please provide a name"],
+        required: [true, "Please provide a uid"],
+        unique: true,
+        primaryKey: true,
+    },
+    displayName: {
+        type: String,
+        required: false,
     },
     email: {
         type: String,
         required: [true, "Please provide an email"],
         unique: true,
     },
-    password: {
-        type: String,
-        required: [true, "Please provide a password"],
-        minlength: 6,
-        select: false,
-    },
     subscription_name: {
         type: String,
-        required: [true, "Please provide a subscription name"],
+        required: true,
         default: "Free",
-    },
-    role: {
-        type: String,
-        enum: ["user", "publisher"],
-        default: "user",
     },
 })
 
