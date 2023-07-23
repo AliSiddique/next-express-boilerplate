@@ -32,20 +32,29 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
   try {
     // Verify the token
     const decodedToken = await admin.auth().verifyIdToken(token);
-    const userId = decodedToken.uid;
-    const { email } = decodedToken;
+    // const userId = decodedToken.uid;
+    // const { email } = decodedToken;
 
     // You can now use the `userId` to perform further operations in your backend
-    console.log("userId is: " + userId);
-    console.log("email is: " + email);
+    // console.log("userId is: " + userId);
+    // console.log("email is: " + email);
 
     // Set the user ID in the request object for future use in other middleware or routes
-    req.body.userId = userId;
+    // req.body.userId = userId;
+
     next();
   } catch (error: any) {
     // If the token is invalid, check for a refresh token
     if (error.code === 'auth/id-token-expired') {
-      const refreshToken = req.body.refreshToken;
+      let refreshToken = req.body.refreshtoken;
+      if (!refreshToken) {
+        const auth = req.headers['refreshtoken'] as string;
+    
+        if (auth && auth.startsWith('Refresh ')) {
+          // Extract the token from the Authorization header
+          refreshToken = auth.split(' ')[1];
+        }
+      }
 
       if (!refreshToken) {
         return res.status(401).json({ error: 'No refresh token found in the request.' });

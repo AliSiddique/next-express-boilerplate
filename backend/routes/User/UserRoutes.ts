@@ -59,8 +59,15 @@ UserRouter.get('/verify',async (req: Request, res: Response) => {
     } catch (error:any) {
       // If the token is invalid, check for a refresh token
       if (error.code === 'auth/id-token-expired') {
-        const refreshToken = req.body.refreshToken;
-  
+        let refreshToken = req.body.refreshToken;
+        if (!refreshToken) {
+          const auth = req.headers['refreshtoken'] as string;
+      
+          if (auth && auth.startsWith('Refresh ')) {
+            // Extract the token from the Authorization header
+            refreshToken = auth.split(' ')[1];
+          }
+        }
         if (!refreshToken) {
           return res.status(401).json({ error: 'No refresh token found in the request.' });
         }
